@@ -1,7 +1,7 @@
 //=============================================================================
 //PROGRAMMER1: Bikhyat Adhikari
 // PANTHER ID1: 6522969
-// CLASS: Your class: CAP5507
+// CLASS: CAP5507
 //
 //PROGRAMMER2: Your name
 // PANTHER ID2: Your panther ID
@@ -53,7 +53,7 @@ public class Controller {
         String[][] u1 = new String[rows][cols];
         String[][] u2 = new String[rows][cols];
         sc.nextLine();
-        
+
         if (mode.toUpperCase().equals("M")) {
             System.out.println("Manual Entries");
             for (int i = 0; i < rows; i++) {
@@ -100,7 +100,6 @@ public class Controller {
         System.out.println("=".repeat(50));
         System.out.println("Display Normal Form");
         System.out.println("=".repeat(50));
-//        Controller.printFormattedMatrix(u1, u2);
         Controller.printFormatMatrix(u1, u2);
 
     }
@@ -148,7 +147,7 @@ public class Controller {
             }
         }
 
-        // Check for Nash Equilibriums
+        // Check for Nash Equilibria
         String nashEq = "";
         for (int i = 0; i < u1.length; i++) {
             for (int j = 0; j < u1[0].length; j++) {
@@ -209,7 +208,6 @@ public class Controller {
         String footer = "-".repeat(50) + "\nPlayer %d Best Response with Player %d Mixing\n" + "-".repeat(50) + "\n";
 
         System.out.printf(String.format(footer, 1, 2));
-//        System.out.println();
 
         float p1BestPayOff = Float.NEGATIVE_INFINITY;
         List<Integer> p1BestResponseIndices = new ArrayList<>();
@@ -250,7 +248,6 @@ public class Controller {
         }
         System.out.println();
         System.out.printf(String.format(footer, 2, 1));
-//        System.out.println();
 
         float p2BestPayOff = Float.NEGATIVE_INFINITY;
         List<Integer> p2BestResponseIndices = new ArrayList<>();
@@ -287,6 +284,7 @@ public class Controller {
         System.out.println("-".repeat(50) + "\nPlayer 1 & 2 Indifferent Mix Probabilities\n" + "-".repeat(50));
         String rowFormat = "Player %d probability of strategies (%s%d) = %.2f\n";
         float[][] u = Controller.stringToNumericArray(u1);
+        // Formula
         float p = (u[1][1] - u[1][0]) / (u[0][0] - u[0][1] - u[1][0] + u[1][1]);
         System.out.printf(String.format(rowFormat, 1, "A", 1, p));
         System.out.printf(String.format(rowFormat, 1, "A", 2, 1 - p));
@@ -314,10 +312,6 @@ public class Controller {
             }
         }
         return expectedPayOff;
-    }
-
-    private static void printBestResponses(String[][] u, float[] probs) {
-
     }
 
     private static float[] generateKProbabilities(int k) {
