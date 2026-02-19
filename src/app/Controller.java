@@ -78,9 +78,9 @@ public class Controller {
                     u2[i][j] = Integer.toString(rand.nextInt(199)-99);
                 }
             }
-            Controller.displayStrategiesAndPayoffs(u1, u2);
-            Controller.displayNormalForm(u1, u2);
-            Controller.displayNashEq(u1, u2);
+//            Controller.displayStrategiesAndPayoffs(u1, u2);
+//            Controller.displayNormalForm(u1, u2);
+//            Controller.displayNashEq(u1, u2);
             Controller.displayPayoffRandomBeliefs(u1, u2);
         }
         else {
@@ -171,6 +171,7 @@ public class Controller {
         System.out.printf(String.format(header, 1, 2));
         
         String rowFormat = "U(%s,%s) = %.2f";
+       
         String beleif = "(";
         for(float b: b2){
             beleif += String.format("%.2f", b);
@@ -190,7 +191,7 @@ public class Controller {
         String footer = "-".repeat(50) + "\nPlayer %d Best Response with Player %d Mixing\n" + "-".repeat(50) + "\n";
         
         System.out.printf(String.format(footer, 1, 2));
-        System.out.println();
+//        System.out.println();
         
         float p1BestPayOff = Float.NEGATIVE_INFINITY;
         List<Integer> p1BestResponseIndices = new ArrayList<>();
@@ -209,7 +210,7 @@ public class Controller {
         System.out.printf("BR%s = %s", beleif, p1BestResponses);
         
         System.out.printf(String.format(header, 2, 1));
-        
+        String beleifs = beleif;
         beleif = "(";
         for(float b: b1){
             beleif += String.format("%.2f", b);
@@ -228,7 +229,7 @@ public class Controller {
         }
         
         System.out.printf(String.format(footer, 2, 1));
-        System.out.println();
+//        System.out.println();
         
         float p2BestPayOff = Float.NEGATIVE_INFINITY;
         List<Integer> p2BestResponseIndices = new ArrayList<>();
@@ -246,6 +247,26 @@ public class Controller {
         p2BestResponses = p2BestResponses.substring(0, p2BestResponses.length()-2) + "}\n";
         System.out.printf("BR%s = %s", beleif, p2BestResponses);
         System.out.println();
+        beleifs += ", " + beleif;
+        String beleifFormat = "Player %d -> U(" + beleifs + ")= %.2f";
+        
+        System.out.println("-".repeat(50) + "\nPlayer 1 & 2 Expected payoffs with both Players Mixing\n" + "-".repeat(50));
+        
+        System.out.printf(String.format(beleifFormat, 1, Controller.calculateExpectedPayOff(u1, b1, b2)));
+        System.out.println();
+        System.out.printf(String.format(beleifFormat, 2, Controller.calculateExpectedPayOff(u2, b1, b2)));
+        System.out.println();
+       
+    }
+    
+    private static float calculateExpectedPayOff(String[][] u, float[] p1, float[] p2){
+        float expectedPayOff = 0;
+        for(int i=0;i<u.length;i++){
+            for(int j=0;j<u[0].length;j++){
+                expectedPayOff += p1[i]*p2[j]*Integer.parseInt(u[i][j]);
+            }
+        }
+        return expectedPayOff;
     }
     
     private static void printBestResponses(String[][] u, float[] probs){
